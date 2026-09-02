@@ -11,8 +11,8 @@ An AI-powered self-growth coach focused on helping people reduce unhealthy depen
 - **Frontend:** React + Vite
 - **Backend:** FastAPI + SQLModel
 - **Database:** SQLite (dev) → Postgres via Supabase/Neon (prod)
-- **LLM inference:** Groq free tier (Llama models) — no paid AI APIs
-- **Hosting:** Render/Fly.io (backend) + GitHub Pages/Vercel (frontend), all free tier
+- **LLM inference:** Groq free tier (Llama models) 
+- **Hosting:** Render/Fly.io (backend) + GitHub Pages/Vercel (frontend)
 
 ## Project log
 
