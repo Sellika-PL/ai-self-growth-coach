@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from app.prompts import REFLECTIVE_SYSTEM_PROMPT
 from app.services.llm import get_completion
+
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -16,10 +18,12 @@ class ChatResponse(BaseModel):
 
 @router.post("", response_model=ChatResponse)
 def chat(request: ChatRequest) -> ChatResponse:
-    """Bare-bones today: takes a message, returns a Groq completion.
-    No conversation persistence, no mode switching, no crisis check yet —
-    those land on Days 6, 6, and 9-10 respectively. Today just proves
-    the frontend-to-backend-to-LLM wiring actually works.
+    """Uses the real reflective system prompt as of today. Still no
+    mode switching (Day 6), no persistence (Day 6/later), and no
+    crisis check yet (Days 9-10) — one thing added per day, on purpose.
     """
-    reply = get_completion(request.message)
+    reply = get_completion(
+        request.message,
+        system_prompt=REFLECTIVE_SYSTEM_PROMPT
+    )
     return ChatResponse(response=reply)

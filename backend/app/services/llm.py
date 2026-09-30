@@ -2,22 +2,20 @@ from groq import Groq
 
 from app.config import GROQ_API_KEY, GROQ_MODEL
 
+
 client = Groq(api_key=GROQ_API_KEY)
 
-# Placeholder only — replaced with the full reflective Socratic
-# sequence in Phase 1, Day 5. Today's goal is just proving the
-# wiring works end to end.
-PLACEHOLDER_SYSTEM_PROMPT = (
-    "You are a supportive assistant for a self-growth app that is still "
-    "being built. Keep responses short while this integration is being tested."
-)
 
-
-def get_completion(user_message: str) -> str:
+def get_completion(user_message: str, system_prompt: str) -> str:
+    """system_prompt is passed in rather than hardcoded here, so the
+    caller (the chat router) decides which mode's prompt to use —
+    this is what lets Day 6's comfort/calm toggle slot in cleanly
+    without touching this function again.
+    """
     completion = client.chat.completions.create(
         model=GROQ_MODEL,
         messages=[
-            {"role": "system", "content": PLACEHOLDER_SYSTEM_PROMPT},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ],
     )
