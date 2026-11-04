@@ -1,12 +1,12 @@
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import create_db_and_tables
-from app.routers import chat
+from app.routers import auth, chat
 
 app = FastAPI(title="AI Self-Growth Coach API")
 
-# Allow the local Vite frontend to communicate with the FastAPI backend.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -21,6 +21,7 @@ def on_startup() -> None:
     create_db_and_tables()
 
 
+app.include_router(auth.router)
 app.include_router(chat.router)
 
 
